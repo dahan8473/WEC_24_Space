@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "WEC_24_Space.sln"
+    "dotnet.defaultSolution": "WEC_24_Space2.sln"
 }
