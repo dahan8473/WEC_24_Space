@@ -7,7 +7,7 @@ public class AmmoSpawner : MonoBehaviour
     public Vector2 spawnAreaMin;         // Minimum spawn area (e.g., bottom-left corner)
     public Vector2 spawnAreaMax;         // Maximum spawn area (e.g., top-right corner)
     public float itemLifetime = 10f;     // Time until the ammo item is destroyed (in seconds)
-
+    
     void Start()
     {
         // Get the main camera

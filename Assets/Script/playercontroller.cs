@@ -205,6 +205,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player has died.");
+        FindObjectOfType<GameManager>().GameOver();
         Destroy(gameObject);
     }
 
