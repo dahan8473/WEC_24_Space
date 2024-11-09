@@ -22,17 +22,17 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerPower playerPower = other.GetComponent<PlayerPower>();
-
-            if (playerPower != null)
+            Debug.Log("we have a contact");
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player.isActiveAndEnabled)
             {
                 // Apply the fire rate boost
-                playerPower.ApplyFireRateBoost(fireRateMultiplier);
+                player.ApplyFireRateBoost(fireRateMultiplier);
 
                 // If duration is greater than 0, make it temporary
                 if (duration > 0)
                 {
-                    StartCoroutine(RemoveBoostAfterDelay(playerPower));
+                    StartCoroutine(RemoveBoostAfterDelay(player));
                 }
 
                 // Play pickup sound
@@ -59,18 +59,20 @@ public class PowerUp : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
+
+                Debug.Log("it should distroy");
             }
         }
     }
 
-    private System.Collections.IEnumerator RemoveBoostAfterDelay(PlayerController playerPower)
+    private System.Collections.IEnumerator RemoveBoostAfterDelay(PlayerController player)
     {
         yield return new WaitForSeconds(duration);
 
         // Only remove boost if the player still exists
-        if (playerPower != null)
+        if (player.isActiveAndEnabled)
         {
-            playerPower.RemoveFireRateBoost(fireRateMultiplier);
+            player.RemoveFireRateBoost(fireRateMultiplier);
         }
     }
 }

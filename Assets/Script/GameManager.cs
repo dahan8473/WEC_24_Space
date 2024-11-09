@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private float startTime;       // Tracks the start time
+    public float elapsedTime;      // Public variable to expose elapsed time to other scripts
+
     void Start()
     {
-        
+        startTime = Time.time;     // Record the time when the game starts
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        elapsedTime = Time.time - startTime;   // Calculate elapsed time
     }
 }
