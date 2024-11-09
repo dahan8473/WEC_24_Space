@@ -11,7 +11,7 @@ public class EnemyBullet : MonoBehaviour
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.TakeDamage();
+                player.TakeDamage((int)damage);
             }
             Destroy(gameObject);
         }
