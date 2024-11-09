@@ -68,9 +68,12 @@
     <Compile Include="Assets\Script\MeteorSpawner.cs" />
     <Compile Include="Assets\Script\EnemyMovement.cs" />
     <Compile Include="Assets\Script\ReloadItem.cs" />
+    <Compile Include="Assets\Script\PlayerPower.cs" />
     <Compile Include="Assets\Script\ObjectPooling.cs" />
     <Compile Include="Assets\Script\AmmoSpawn.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
+    <Compile Include="Assets\Script\ReloadAmmoPickup.cs" />
+    <Compile Include="Assets\Script\PowerUp.cs" />
     <Compile Include="Assets\Script\HealthAndAmmo.cs" />
     <Compile Include="Assets\Script\Meteor.cs" />
     <Compile Include="Assets\Script\Map.cs" />

@@ -32,7 +32,7 @@ public class PowerUp : MonoBehaviour
                 // If duration is greater than 0, make it temporary
                 if (duration > 0)
                 {
-                    StartCoroutine(RemoveBoostAfterDelay(playerPower));
+                    StartCoroutine(RemoveBoostAfterDelay(playerPower));  // Correctly pass PlayerPower
                 }
 
                 // Play pickup sound
@@ -63,14 +63,14 @@ public class PowerUp : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator RemoveBoostAfterDelay(PlayerController playerPower)
+    private System.Collections.IEnumerator RemoveBoostAfterDelay(PlayerPower playerPower)  // Change to PlayerPower
     {
         yield return new WaitForSeconds(duration);
 
         // Only remove boost if the player still exists
         if (playerPower != null)
         {
-            playerPower.RemoveFireRateBoost(fireRateMultiplier);
+            playerPower.RemoveFireRateBoost(fireRateMultiplier);  // Correctly call method on PlayerPower
         }
     }
 }
