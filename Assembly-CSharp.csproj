@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Script/playercontroller.cs" />
-    <Compile Include="Assets/Script/Movement.cs" />
+    <Compile Include="Assets/Script/Map.cs" />
     <Compile Include="Assets/Vertical 2D Shooting BE4/ReadMe/Scripts/ReadmeBE4.cs" />
   </ItemGroup>
   <ItemGroup>
