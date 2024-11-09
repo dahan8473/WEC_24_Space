@@ -196,6 +196,11 @@ public class PlayerController : MonoBehaviour
         // Update health UI text
         UpdateHealthText();
     }
+    public void ReloadAmmo()
+{
+    currentAmmo = maxAmmo; // Reload ammo to the max value
+    UpdateAmmoText(); // Update the HUD to reflect the new ammo count
+}
 
     private void Die()
     {
