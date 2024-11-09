@@ -61,6 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Script/playercontroller.cs" />
+    <Compile Include="Assets/Script/MeteorSpawner.cs" />
+    <Compile Include="Assets/Script/EnemyMovement.cs" />
+    <Compile Include="Assets/Script/ObjectPooling.cs" />
+    <Compile Include="Assets/Script/GameManager.cs" />
+    <Compile Include="Assets/Script/Meteor.cs" />
     <Compile Include="Assets/Script/Map.cs" />
     <Compile Include="Assets/Vertical 2D Shooting BE4/ReadMe/Scripts/ReadmeBE4.cs" />
   </ItemGroup>
