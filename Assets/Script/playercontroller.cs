@@ -29,8 +29,26 @@ public class PlayerController : MonoBehaviour
     private float objectWidth;
     private float objectHeight;
 
+    [Header("Power Settings")]
+    [SerializeField] private float currentPower = 0f;
+    [SerializeField] private float maxPower = 100f;
+
+    [Header("Fire Rate Settings")]
+    [SerializeField] private float baseFireRate = 0.5f;         // Default fire rate
+    [SerializeField] private float minFireRate = 0.1f;         // Maximum speed (minimum time between shots)
+    [SerializeField] private float currentFireRateBonus = 1f;  // Current multiplier (1 = normal speed)
+
+    private PlayerController playerController;
+
     void Start()
     {
+        playerController = GetComponent<PlayerController>();
+        if (playerController != null)
+        {
+            // Set initial fire rate
+            baseFireRate = playerController.fireRate;
+        }
+
         // Cache components
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null && shootSound != null)
@@ -39,7 +57,7 @@ public class PlayerController : MonoBehaviour
         }
 
         mainCamera = Camera.main;
-        
+
         // Calculate screen bounds
         CalculateScreenBounds();
     }
@@ -70,17 +88,17 @@ public class PlayerController : MonoBehaviour
             verticalInput,
             0
         ) * moveSpeed * Time.deltaTime;
-        
+
         // Calculate new position
         Vector3 newPosition = transform.position + movement;
-        
+
         // Convert to viewport point for boundary checking
         Vector3 viewportPoint = mainCamera.WorldToViewportPoint(newPosition);
-        
+
         // Clamp position within boundaries
         viewportPoint.x = Mathf.Clamp(viewportPoint.x, screenBoundary, 1 - screenBoundary);
         viewportPoint.y = Mathf.Clamp(viewportPoint.y, minHeightPercentage, maxHeightPercentage);
-        
+
         // Convert back to world position and apply
         transform.position = mainCamera.ViewportToWorldPoint(viewportPoint);
     }
@@ -98,22 +116,22 @@ public class PlayerController : MonoBehaviour
     {
         // Calculate spawn position
         Vector3 spawnPosition = transform.position + new Vector3(bulletSpawnOffset.x, bulletSpawnOffset.y, 0);
-        
+
         // Spawn bullet
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-        
+
         // Set bullet velocity
         if (bullet.TryGetComponent<Rigidbody2D>(out var rb))
         {
             rb.velocity = Vector2.up * bulletSpeed;
         }
-        
+
         // Play effects
         if (shootEffect != null)
         {
             shootEffect.Play();
         }
-        
+
         if (audioSource != null && shootSound != null)
         {
             audioSource.PlayOneShot(shootSound);
@@ -142,5 +160,70 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawLine(topLeft, bottomLeft);
             Gizmos.DrawLine(topRight, bottomRight);
         }
+    }
+    public void IncreasePower(float amount)
+    {
+        currentPower = Mathf.Min(currentPower + amount, maxPower);
+        Debug.Log($"Power increased! Current Power: {currentPower}");
+    }
+
+    // Method to get current power level
+    public float GetCurrentPower()
+    {
+        return currentPower;
+    }
+
+    // Method to apply fire rate boost
+    public void ApplyFireRateBoost(float multiplier)
+    {
+        if (playerController != null)
+        {
+            // Update the current bonus multiplier
+            currentFireRateBonus *= multiplier;
+
+            // Calculate new fire rate (ensuring it doesn't go below minimum)
+            float newFireRate = Mathf.Max(baseFireRate * multiplier, minFireRate);
+
+            // Apply to player controller
+            playerController.fireRate = newFireRate;
+
+            Debug.Log($"Fire Rate modified! New fire rate: {newFireRate:F3} seconds");
+        }
+    }
+
+
+    // Method to remove fire rate boost
+    public void RemoveFireRateBoost(float multiplier)
+    {
+        if (playerController != null)
+        {
+            // Remove the multiplier from current bonus
+            currentFireRateBonus /= multiplier;
+
+            // Calculate new fire rate
+            float newFireRate = Mathf.Max(baseFireRate * currentFireRateBonus, minFireRate);
+
+            // Apply to player controller
+            playerController.fireRate = newFireRate;
+
+            Debug.Log($"Fire Rate boost removed! New fire rate: {newFireRate:F3} seconds");
+        }
+    }
+
+    // Method to reset fire rate to base value
+    public void ResetFireRate()
+    {
+        if (playerController != null)
+        {
+            currentFireRateBonus = 1f;
+            playerController.fireRate = baseFireRate;
+            Debug.Log("Fire Rate reset to base value!");
+        }
+    }
+
+    // Method to get current fire rate
+    public float GetCurrentFireRate()
+    {
+        return playerController != null ? playerController.fireRate : baseFireRate;
     }
 }
